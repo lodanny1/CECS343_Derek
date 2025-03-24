@@ -1,6 +1,5 @@
 """
-Module: parking
-This module manages the parking spots including displaying available spots and reserving a spot.
+Manages the parking spots including displaying available spots and reserving a spot.
 """
 
 from datetime import datetime

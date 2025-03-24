@@ -1,6 +1,5 @@
 """
-Module: notifications
-This module manages notifications for parking-related events.
+Manages notifications for parking-related events.
 """
 
 def send_notification(user_id: str, message: str) -> bool:

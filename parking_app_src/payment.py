@@ -1,6 +1,5 @@
 """
-Module: payment
-This module processes payments for parking reservations.
+Processes payments for parking reservations.
 """
 
 def process_payment(user_id: str, amount: float, payment_details: dict) -> bool:

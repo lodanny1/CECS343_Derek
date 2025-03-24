@@ -1,14 +1,13 @@
 """
-Module: auth
-This module handles user authentication including login and logout.
+Handles user authentication including login and logout.
 """
 
 from user import User
 
 # Simulated user database for demonstration purposes.
 USER_DB = {
-    "faculty1": {"password": "secret1", "email": "faculty1@university.edu", "role": "Faculty"},
-    "student1": {"password": "secret2", "email": "student1@university.edu", "role": "Student"},
+    "faculty1": {"password": "secret1", "email": "faculty1@student.csulb.edu", "role": "Faculty"},
+    "student1": {"password": "secret2", "email": "student1@student.csulb.edu", "role": "Student"},
     "visitor1": {"password": "secret3", "email": "visitor1@example.com", "role": "Visitor"},
 }
 

@@ -1,6 +1,5 @@
 """
-Module: app
-This module demonstrates a simple end-to-end flow of the parking system use cases.
+Demonstrates a simple end-to-end flow of the parking system use cases.
 """
 
 from authentication import login, logout

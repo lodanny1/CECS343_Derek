@@ -1,11 +1,10 @@
 """
-Module: user
-This module defines the User class for the parking system.
+Defines the User class for the parking system.
 """
 
 class User:
     """
-    A class to represent a user in the parking system.
+    Represents a user in the parking system.
 
     Attributes:
         username (str): The username of the user.

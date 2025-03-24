@@ -1,6 +1,5 @@
 """
-Module: history
-This module handles retrieval of a user's transaction and parking history.
+Handles retrieval of a user's transaction and parking history.
 """
 
 # Simulated transaction history database.
