@@ -26,7 +26,7 @@ def is_spot_available(parking_spot, start_time, duration_minutes):
         return len(overlapping_reservations) == 0
 
     except Exception as e:
-        print("❌ Erreur lors de la vérification de disponibilité:", e)
+        print("Verification error for availability:", e)
         return False
 
 def update_expired_reservations():
@@ -42,9 +42,9 @@ def update_expired_reservations():
             },
             {"$set": {"status": "expired"}}
         )
-        print(f"🔄 {result.modified_count} réservation(s) mise(s) à jour comme expirée(s).")
+        print(f"{result.modified_count} expired reservation(s).")
     except Exception as e:
-        print("❌ Erreur lors de la mise à jour des statuts:", e)
+        print("Error during reservation update:", e)
 
 def run_auto_update(interval_seconds=60):
     """

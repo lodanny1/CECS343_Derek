@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 from datetime import datetime
-from insert_reservations import insert_reservation
 from read_reservations import read_reservations
-from check_availability import is_spot_available, update_expired_reservations
+from make_reservation_with_payment import make_reservation_with_payment
+from check_availability import update_expired_reservations
+from pricing import calculate_price
 
 # window
 root = tk.Tk()
@@ -22,38 +23,49 @@ def refresh_reservations(update_before=False):
         reservations_list.insert(tk.END, line)
 
 def open_add_window(parking_spot_value=None):
+    def update_amount(*args):
+        try:
+            duration = int(entry_duration.get())
+            amount = calculate_price(duration)
+            amount_var.set(f"{amount:.2f}")
+        except:
+            amount_var.set("")
+
     def submit_reservation():
-        user = entry_user.get()
+        user = "user_test_001"  # temporaire jusqu'à gestion des utilisateurs
         spot = entry_spot.get()
         date = entry_date.get()
         duration = entry_duration.get()
-        status = status_var.get()
+        amount = amount_var.get()
+        method = method_var.get()
 
         try:
             reservation_time = datetime.strptime(date, "%Y-%m-%d %H:%M")
             duration_int = int(duration)
+            amount_float = float(amount)
 
-            # check availability
-            if not is_spot_available(spot, reservation_time, duration_int):
-                messagebox.showerror("Unavailable", f"Spot {spot} is already taken at this time.")
-                return
+            reservation_id = make_reservation_with_payment(
+                parking_spot=spot,
+                reservation_time=reservation_time,
+                duration_minutes=duration_int,
+                amount=amount_float,
+                method=method
+            )
 
-            insert_reservation(user, spot, reservation_time, duration_int, status=status)
-            messagebox.showinfo("Success", "Reservation added!")
-            add_window.destroy()
-            refresh_reservations()
+            if reservation_id:
+                messagebox.showinfo("Success", "✅ Reservation and payment completed!")
+                add_window.destroy()
+                refresh_reservations()
+            else:
+                messagebox.showerror("Error", "❌ Reservation or payment failed.")
 
         except ValueError:
-            messagebox.showerror("Invalid Input", "Please enter a valid date and duration.")
+            messagebox.showerror("Invalid Input", "Please enter a valid date, duration and amount.")
         except Exception as e:
             messagebox.showerror("Error", f"Something went wrong: {e}")
 
     add_window = tk.Toplevel(root)
-    add_window.title("Add Reservation")
-
-    tk.Label(add_window, text="User ID:").pack()
-    entry_user = tk.Entry(add_window)
-    entry_user.pack()
+    add_window.title("Add Reservation with Payment")
 
     tk.Label(add_window, text="Parking Spot:").pack()
     entry_spot = tk.Entry(add_window)
@@ -70,10 +82,16 @@ def open_add_window(parking_spot_value=None):
     tk.Label(add_window, text="Duration (minutes):").pack()
     entry_duration = tk.Entry(add_window)
     entry_duration.pack()
+    entry_duration.bind("<KeyRelease>", update_amount)
 
-    tk.Label(add_window, text="Status:").pack()
-    status_var = tk.StringVar(value="active")
-    tk.Entry(add_window, textvariable=status_var).pack()
+    tk.Label(add_window, text="Amount (€):").pack()
+    amount_var = tk.StringVar()
+    entry_amount = tk.Entry(add_window, textvariable=amount_var, state="readonly")
+    entry_amount.pack()
+
+    tk.Label(add_window, text="Payment Method:").pack()
+    method_var = tk.StringVar(value="credit_card")
+    tk.Entry(add_window, textvariable=method_var).pack()
 
     tk.Button(add_window, text="Submit", command=submit_reservation).pack(pady=10)
 
@@ -92,7 +110,7 @@ btn_frame.pack()
 
 tk.Button(btn_frame, text="🔄 Refresh Only", command=lambda: refresh_reservations()).pack(side=tk.LEFT, padx=10)
 tk.Button(btn_frame, text="🔁 Refresh + Update", command=lambda: refresh_reservations(update_before=True)).pack(side=tk.LEFT, padx=10)
-tk.Button(btn_frame, text="➕ Add manually", command=open_add_window).pack(side=tk.LEFT, padx=10)
+tk.Button(btn_frame, text="➕ Add Reservation + Payment", command=open_add_window).pack(side=tk.LEFT, padx=10)
 
 # quick access
 tk.Label(root, text="🅿️ Quick Access - Select a Parking Spot:").pack(pady=10)

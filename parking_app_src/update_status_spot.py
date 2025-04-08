@@ -19,13 +19,12 @@ def update_expired_reservations():
             {"$set": {"status": "expired"}}
         )
 
-        print(f"✅ Réservations expirées mises à jour : {result.modified_count}")
+        print(f"Update of expired reservations : {result.modified_count}")
         return result.modified_count
 
     except Exception as e:
-        print("❌ Erreur lors de la mise à jour des statuts :", e)
+        print("Error during update reservation :", e)
         return 0
 
-# Test
 if __name__ == "__main__":
     update_expired_reservations()

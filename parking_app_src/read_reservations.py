@@ -32,6 +32,6 @@ def read_reservations():
         print("Error while reading reservations:", e)
         return []
 
-# Test rapide
+# fast test
 if __name__ == "__main__":
     read_reservations()

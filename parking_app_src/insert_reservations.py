@@ -27,8 +27,8 @@ def insert_reservation(user_id, parking_spot, reservation_time, duration_minutes
         }
 
         result = reservations_collection.insert_one(reservation)
-        print(f"✅ Réservation insérée avec l'ID : {result.inserted_id}")
+        print(f"Inserted reservation with ID : {result.inserted_id}")
         return result.inserted_id
 
     except Exception as e:
-        print("Erreur lors de l'insertion de la réservation :", e)
+        print("Error during reservation insertion :", e)
