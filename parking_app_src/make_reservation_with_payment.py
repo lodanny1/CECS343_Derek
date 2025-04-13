@@ -1,10 +1,10 @@
 from datetime import datetime
 from insert_payment import insert_payment
 from insert_reservations import insert_reservation
-from check_availability import is_spot_available
+from check_availability import is_spot_available, update_expired_reservations
 from pricing import calculate_price
 
-# TEMPORARY user_id placeholder (to be replaced later with real user system)
+#user_id placeholder waiting the real user collection
 user_id = "user_test_001"
 
 def make_reservation_with_payment(parking_spot, reservation_time, duration_minutes, amount, method):
@@ -13,12 +13,15 @@ def make_reservation_with_payment(parking_spot, reservation_time, duration_minut
     Only inserts the reservation if the payment is successful.
     """
     try:
-        # Check spot availability
+        #update expired reservations
+        update_expired_reservations()
+
+        #check spot availability
         if not is_spot_available(parking_spot, reservation_time, duration_minutes):
             print(f"Spot {parking_spot} is already reserved at the selected time.")
             return None
 
-        # Insert payment first
+        #insert payment first
         amount = calculate_price(duration_minutes)
         payment_id = insert_payment(user_id, amount, method, status="completed")
 
@@ -26,7 +29,7 @@ def make_reservation_with_payment(parking_spot, reservation_time, duration_minut
             print("Payment failed. Reservation cancelled.")
             return None
 
-        # Insert reservation only if payment is successful
+        #insert only successful payment
         reservation_id = insert_reservation(
             user_id=user_id,
             parking_spot=parking_spot,
@@ -42,7 +45,7 @@ def make_reservation_with_payment(parking_spot, reservation_time, duration_minut
         print("Error during reservation with payment:", e)
         return None
 
-# Example test
+#test
 if __name__ == "__main__":
     make_reservation_with_payment(
         parking_spot="A1",
