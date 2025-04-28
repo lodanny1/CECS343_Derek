@@ -42,7 +42,14 @@ def dashboard():
     if 'username' not in session:
         return redirect(url_for('home'))
     
-    return f'Welcome {session["username"]} to the Dashboard!'
+    return render_template('dashboard.html', username=session['username'])
+
+# Route for logout (clearing session)
+@app.route('/logout')
+def logout():
+    session.pop('username', None)  # Remove the username from the session
+    flash('You have been logged out.', 'info')
+    return redirect(url_for('home'))
 
 # Route for registering a new user (optional)
 @app.route('/register', methods=['GET', 'POST'])
@@ -69,3 +76,4 @@ def register():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
