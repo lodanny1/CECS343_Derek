@@ -5,7 +5,6 @@ import time
 _, reservations_collection = get_mongo_collections()
 
 def is_spot_available(parking_spot, start_time, duration_minutes):
-    # Checks avail spots
     try:
         end_time = start_time + timedelta(minutes=duration_minutes)
 
@@ -27,7 +26,6 @@ def is_spot_available(parking_spot, start_time, duration_minutes):
         return False
 
 def update_expired_reservations():
-    # Updates expired reservations
     try:
         now = datetime.now()
         result = reservations_collection.update_many(
@@ -41,7 +39,6 @@ def update_expired_reservations():
     except Exception as e:
         print("Error during reservation update:", e)
 
-# Status Update
 def run_auto_update(interval_seconds=60):
     print("Auto-update. Verifications every", interval_seconds, "secondes.")
     while True:

@@ -12,7 +12,7 @@ class ReserveMapWindow(QWidget):
     def __init__(self, username, parent=None):
         super().__init__(parent)
         self.username = username
-        self.setWindowTitle("Reserve a Parking Spot")
+        self.setWindowTitle("Reserve Parking Spot")
         self.setGeometry(200, 200, 700, 600)
         self.setMinimumSize(600, 500)
 
@@ -25,7 +25,7 @@ class ReserveMapWindow(QWidget):
         main_layout.setAlignment(Qt.AlignTop)
         self.setLayout(main_layout)
 
-        self.title = QLabel(f"Select an available spot, {self.username}:")
+        self.title = QLabel(f"Select available spot, {self.username}:")
         self.title.setStyleSheet("font-weight: bold; font-size: 16px;")
         self.title.setAlignment(Qt.AlignCenter)
         main_layout.addWidget(self.title)

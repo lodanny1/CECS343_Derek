@@ -3,7 +3,6 @@ from bson.objectid import ObjectId
 from pymongo import MongoClient
 import certifi
 
-# Get collections
 _, reservations_collection = get_mongo_collections()
 
 uri = "mongodb+srv://flavienmaameri57:DCU9o2Vg0K8PvjnG@parking.v4glm.mongodb.net/?retryWrites=true&w=majority&appName=Parking"
@@ -35,7 +34,6 @@ def cancel_reservation_by_id(reservation_id):
             print(f"❌ No reservation found with ID: {reservation_id}")
             return
 
-        # Update reservation to cancelled
         result = reservations_collection.update_one(
             {"_id": ObjectId(reservation_id)},
             {"$set": {"status": "cancelled"}}

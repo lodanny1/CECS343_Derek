@@ -12,7 +12,7 @@ class DashboardWindow(QWidget):
     def __init__(self, username, parent=None):
         super().__init__(parent)
         self.username = username
-        self.setWindowTitle(f"Dashboard - {username}")
+        self.setWindowTitle(f"CSULB Parking - {username}")
         self.setGeometry(150, 150, 400, 350)
         self.init_ui()
 
@@ -69,7 +69,7 @@ class DashboardWindow(QWidget):
 
     def cancel_reservation(self):
         if not self.current_reservation:
-            QMessageBox.information(self, "No Reservation", "There is no active reservation to cancel.")
+            QMessageBox.information(self, "No Reservation", "There is no active reservation.")
             return
 
         confirm = QMessageBox.question(
@@ -87,5 +87,5 @@ class DashboardWindow(QWidget):
         self.payment_window.show()
 
     def logout(self):
-        QMessageBox.information(self, "Logout", "Logging out...")
+        QMessageBox.information(self, "Logout", "Loged Out")
         self.close()

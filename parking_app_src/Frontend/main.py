@@ -5,13 +5,13 @@ from Frontend.login import LoginWindow
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Parking App - Main Menu")
+        self.setWindowTitle("CSULB Parking")
         self.setGeometry(100, 100, 300, 200)
         self.init_ui()
 
     def init_ui(self):
         layout = QVBoxLayout()
-        layout.addWidget(QLabel("Welcome to the Parking App"))
+        layout.addWidget(QLabel("Welcome to the CSULB"))
 
         login_btn = QPushButton("Login")
         login_btn.clicked.connect(self.login_clicked)
@@ -26,9 +26,6 @@ class MainWindow(QWidget):
     def login_clicked(self):
         self.login_window = LoginWindow()
         self.login_window.show()
-
-    def logout_clicked(self):
-        QMessageBox.information(self, "Logout", "Logout clicked")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

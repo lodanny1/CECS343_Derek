@@ -39,7 +39,7 @@ class LoginWindow(QWidget):
         password = self.password_input.text().strip()
 
         if validate_login(username, password):
-            QMessageBox.information(self, "Login", f"Welcome, {username}!")
+            QMessageBox.information(self, "Login", f"Welcome to CSULB, {username}!")
             self.dashboard = DashboardWindow(username)
             self.dashboard.show()
             self.close() 
